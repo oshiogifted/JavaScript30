@@ -58,7 +58,30 @@
   <audio data-key="76" src="sounds/tink.wav"></audio>
 
 <script>
+// Code along with this video - https://www.youtube.com/watch?v=VuN8qwZoego&ab_channel=WesBos
 
+
+function playsound(e) {
+  const audio = document.querySelector(`audio[data-key="${e.keyCode}"]`);
+  const key = document.querySelector(`.key[data-key="${e.keyCode}"]`);
+  if (!audio) return; // stop the function from all together
+  audio.currentTime = 0; //rewind to the start
+  audio.play();
+  key.classList.add('playing');
+}
+
+/* function removeTransition(e) {
+  if (e.propertyName !== 'transform') return; // skip it if it's not a transform
+  this.classList.remove('playing');
+} */
+const removeTransition = e => {
+  if (e.propertyName !== 'transform') return; // skip it if it's not a transform
+  e.currentTarget.classList.remove('playing'); // can't use 'this' in arrow function as it refers to the window. use e.currentTarget to remove instead.
+}
+
+window.addEventListener('keydown', playsound);
+const keys = document.querySelectorAll('.key');
+keys.forEach(key => key.addEventListener('transitionend', removeTransition));
 </script>
 
 
