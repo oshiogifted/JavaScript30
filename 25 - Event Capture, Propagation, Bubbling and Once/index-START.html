@@ -40,9 +40,32 @@
   }
 </style>
 
-<button></button>
+<button>Can only click once!</button>
 <script>
+  const divs = document.querySelectorAll('div');
+  const button = document.querySelector('button');
 
+  function logText(e) {
+    console.log(this.classList.value);
+    //e.stopPropagation(); // stop bubbling the event up
+    // console.log(this);
+  }
+
+  //document.body.addEventListener('click', logText);
+  divs.forEach(div => div.addEventListener('click', logText, {
+    capture: false, 
+    once: true // listen for a click and then unbind itself - very new to the browser
+  }));
+
+  // unbind itself is the samne thing as saying - 
+  //div.removeEventListener('click', logText);
+
+  // can only click this once
+  // can be used on store checkout when you don't want somene to click the button
+  // more than once
+  button.addEventListener('click', () => {
+    console.log('Click!!!');
+  }, {once: true})
 </script>
 </body>
 </html>
